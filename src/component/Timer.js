@@ -5,14 +5,15 @@ class Timer extends React.Component {
 		super();
 		this.state = {
 			sec: 0,
-			min: 24,
+			min: 0,
+			timerId: null,
 			isStarted: false
 		}
 
 	}
 
-	stopTimer(timerId) {
-		window.clearInterval(timerId);
+	stopTimer() {
+		window.clearInterval(this.state.timerId);
 		alert('ポモドーロが完了しました。');
 	}
 
@@ -33,16 +34,31 @@ class Timer extends React.Component {
 				});
 			}
 			if (this.state.min === 25) {
-				this.stopTimer(timerId);
+				this.stopTimer();
 			}
 		}, 1000);
+
+		this.setState({ timerId: timerId });
+	}
+
+	onResetClick() {
+		window.clearInterval(this.state.timerId);
+		this.setState({
+			sec: 0,
+			min: 0,
+			timerId: null,
+			isStarted: false,
+		});
+		alert('リセットしました');
 	}
 
 	render() {
 		return (
 			<div>
 				<p id="output">{this.state.min}:{this.state.sec}</p>
-				<button id="timerBtn" onClick={() => this.onBtnClick()}>START</button>
+				{this.state.isStarted? 
+					<button id="resetBtn" onClick={() => this.onResetClick()}>RESET</button> :
+					<button id="timerBtn" onClick={() => this.onBtnClick()}>START</button>}
 			</div>
 		);
 	}
