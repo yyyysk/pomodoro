@@ -4,9 +4,11 @@ import Timer from './Timer';
 const PomodoroApp = () => {
 
 	return(
-		<div>
-			<h1>POMODORO TIMER</h1>
-			<Timer />
+		<div className="pomodoro">
+			<div className="pomodoro__inner">
+				<h1 className="pomodoro__title">POMODORO TIMER</h1>
+				<Timer />
+			</div>
 		</div>
 	);
 };

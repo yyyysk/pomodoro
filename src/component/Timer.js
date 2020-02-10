@@ -54,11 +54,11 @@ class Timer extends React.Component {
 
 	render() {
 		return (
-			<div>
-				<p id="output">{this.state.min}:{this.state.sec}</p>
+			<div className="timer">
+				<p id="output" className="timer__output">{this.state.min}:{this.state.sec}</p>
 				{this.state.isStarted? 
-					<button id="resetBtn" onClick={() => this.onResetClick()}>RESET</button> :
-					<button id="timerBtn" onClick={() => this.onBtnClick()}>START</button>}
+					<button id="resetBtn" className="timer__btn" onClick={() => this.onResetClick()}>RESET</button> :
+					<button id="timerBtn" className="timer__btn" onClick={() => this.onBtnClick()}>START</button>}
 			</div>
 		);
 	}

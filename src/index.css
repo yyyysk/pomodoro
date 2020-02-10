@@ -11,3 +11,26 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.pomodoro__inner {
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+.pomodoro__title {
+	font-size: 2rem;
+}
+
+.timer {
+	text-align: center;
+}
+
+.timer__output {
+	font-size: 8rem;
+}
+
+.timer__btn {
+	font-size: 3rem;
+	cursor: pointer;
+}
+
