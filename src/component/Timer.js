@@ -1,68 +1,47 @@
 import React, { useState } from 'react';
 
-class Timer extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			sec: 0,
-			min: 0,
-			timerId: null,
-			isStarted: false
+
+const Timer = ({ sec, min, isStarted, timerId, startTimer, stopTimer, resetTimer, tick }) => {
+	console.log({ sec, min, isStarted, timerId, startTimer, stopTimer, resetTimer, tick});
+
+	const _stopTimer = () => {
+		window.clearInterval(timerId);
+		alert('ポモドーロが完了しました');
+	};
+
+	let _sec = 50;
+	let _min = 0;
+	const _tick = () => {
+		tick(min, _sec++);
+
+		if (_sec === 60) {
+			tick(0, _min++);
 		}
 
+		if (min === 25) {
+			_stopTimer();
+		}
 	}
 
-	stopTimer() {
-		window.clearInterval(this.state.timerId);
-		alert('ポモドーロが完了しました。');
-	}
+	const _startTimer = () => {
+		if (isStarted) return;
 
-	onBtnClick() {
-		if (this.state.isStarted) return;
+		const timerId = window.setInterval(_tick, 1000);
+		startTimer(timerId);	
+	};
 
-		this.setState({ isStarted: true });
-		
-		let timerId;
-		timerId = window.setInterval(() => {
-			this.setState({
-				sec: this.state.sec+1,
-			});
-			if (this.state.sec === 60) {
-				this.setState({
-					sec: 0,
-					min: this.state.min+1
-				});
-			}
-			if (this.state.min === 25) {
-				this.stopTimer();
-			}
-		}, 1000);
-
-		this.setState({ timerId: timerId });
-	}
-
-	onResetClick() {
-		window.clearInterval(this.state.timerId);
-		this.setState({
-			sec: 0,
-			min: 0,
-			timerId: null,
-			isStarted: false,
-		});
-		alert('リセットしました');
-	}
-
-	render() {
-		return (
+	return (
 			<div className="timer">
-				<p id="output" className="timer__output">{this.state.min}:{this.state.sec}</p>
-				{this.state.isStarted? 
-					<button id="resetBtn" className="timer__btn" onClick={() => this.onResetClick()}>RESET</button> :
-					<button id="timerBtn" className="timer__btn" onClick={() => this.onBtnClick()}>START</button>}
+				<p id="output" className="timer__output">{min}:{sec}</p>
+				{
+					isStarted? 
+					<button id="resetBtn" className="timer__btn" onClick={() => {}}>RESET</button> :
+					<button id="timerBtn" className="timer__btn" onClick={() => _startTimer()}>START</button>
+				}
 			</div>
 		);
-	}
-}
+};
+
 
 export default Timer;
 
